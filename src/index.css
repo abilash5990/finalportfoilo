@@ -5,8 +5,8 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
-  --color-accent: #06b6d4;
-  --color-accent-glow: rgba(6, 182, 212, 0.5);
+  --color-accent: #0284c7;
+  --color-accent-glow: rgba(2, 132, 199, 0.2);
   
   /* Theme-aware semantic colors */
   --color-bg-primary: var(--bg-primary);
@@ -21,17 +21,23 @@
   }
   
   :root {
-    --bg-primary: #ffffff;
+    --bg-primary: #f8fafc;
     --text-primary: #0f172a;
-    --border-subtle: rgba(0, 0, 0, 0.1);
-    --glass-bg: rgba(255, 255, 255, 0.7);
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --border-subtle: rgba(15, 23, 42, 0.12);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --surface-hover: rgba(15, 23, 42, 0.04);
   }
 
   .dark {
-    --bg-primary: #020617;
+    --bg-primary: #020817;
     --text-primary: #f8fafc;
-    --border-subtle: rgba(255, 255, 255, 0.1);
-    --glass-bg: rgba(15, 23, 42, 0.7);
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-subtle: rgba(148, 163, 184, 0.25);
+    --glass-bg: rgba(15, 23, 42, 0.75);
+    --surface-hover: rgba(255, 255, 255, 0.08);
   }
 
   body {
@@ -44,7 +50,7 @@
   * {
     transition-property: background-color, border-color, color, fill, stroke, box-shadow, opacity;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 700ms;
+    transition-duration: 180ms;
   }
 
   /* Prevent transitions on transform/scale to keep interactions snappy */
@@ -53,14 +59,39 @@
   }
   
   .glass {
-    @apply backdrop-blur-xl bg-glass-bg border border-border-subtle;
+    @apply bg-glass-bg border border-border-subtle;
+  }
+
+  .text-primary {
+    color: var(--text-primary);
+  }
+
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .btn-primary {
+    @apply bg-accent hover:bg-sky-600 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply transition-colors;
+    background-color: transparent;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--surface-hover);
   }
   
   .glow-text {
-    text-shadow: 0 0 15px var(--color-accent-glow);
+    text-shadow: 0 0 8px var(--color-accent-glow);
   }
   
   .glow-border {
-    box-shadow: 0 0 20px var(--color-accent-glow);
+    box-shadow: 0 0 10px var(--color-accent-glow);
   }
 }

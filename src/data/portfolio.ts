@@ -3,71 +3,71 @@ import { Project, Skill, Experience, Education } from '../types';
 export const PROJECTS: Project[] = [
   {
     id: '1',
-    title: 'Aether OS',
-    role: 'Lead Architect',
-    duration: '6 Months',
-    description: 'A decentralized operating system built for the next generation of spatial computing. It leverages WebAssembly for high-performance execution and post-quantum cryptography for data security.',
+    title: 'E-commerce Admin Dashboard',
+    role: 'Frontend Developer',
+    duration: '4 Months',
+    description: 'Built an admin dashboard for order and inventory management, helping operations teams reduce manual reporting and improve daily decision-making.',
     keyFeatures: [
-      'Decentralized identity management',
-      'Wasm-based plugin architecture',
-      'Spatial UI rendering engine'
+      'Created role-based dashboards for sales, inventory, and fulfillment',
+      'Implemented reusable data tables with filtering, export, and pagination',
+      'Improved Lighthouse performance score from 68 to 92'
     ],
-    tags: ['React', 'WebAssembly', 'Rust'],
-    link: '#'
+    tags: ['React', 'TypeScript', 'Tailwind CSS'],
+    link: 'https://example.com'
   },
   {
     id: '2',
-    title: 'Neural Bridge',
+    title: 'Job Portal Platform',
     role: 'Full Stack Engineer',
-    duration: '4 Months',
-    description: 'Real-time brain-computer interface visualization dashboard using neural telemetry. Designed to handle high-throughput data streams with sub-10ms latency for medical research.',
+    duration: '5 Months',
+    description: 'Developed a job platform where candidates apply to openings and recruiters manage applications through a structured hiring pipeline.',
     keyFeatures: [
-      'Real-time EEG data streaming',
-      '3D neural mapping with Three.js',
-      'Automated anomaly detection'
+      'Built candidate profile creation, resume upload, and job application flows',
+      'Implemented recruiter dashboard with search and status tracking',
+      'Reduced average API response time by 30% via query and indexing improvements'
     ],
-    tags: ['Three.js', 'TypeScript', 'Python'],
-    link: '#'
+    tags: ['React', 'Node.js', 'PostgreSQL'],
+    link: 'https://example.com'
   },
   {
     id: '3',
-    title: 'Quantum Ledger',
-    role: 'Security Specialist',
-    duration: '8 Months',
-    description: 'Post-quantum cryptographic wallet for secure multi-chain asset management. Implements lattice-based signatures to protect against future quantum computing threats.',
+    title: 'Real-Time Analytics Dashboard',
+    role: 'Full Stack Developer',
+    duration: '3 Months',
+    description: 'Built a real-time analytics dashboard for product and engagement metrics, enabling teams to monitor KPI trends and react faster.',
     keyFeatures: [
-      'Multi-chain asset aggregation',
-      'Lattice-based signature implementation',
-      'Hardware security module integration'
+      'Developed live charts and summary cards for key business metrics',
+      'Integrated authentication and role-based access control',
+      'Decreased page load time by 40% through bundle optimization and lazy loading'
     ],
-    tags: ['Next.js', 'Solidity', 'Go'],
-    link: '#'
+    tags: ['Next.js', 'TypeScript', 'Supabase'],
+    link: 'https://example.com'
   }
 ];
 
 export const EXPERIENCE: Experience[] = [
   {
     id: '1',
-    company: 'Stellar Systems Inc.',
-    role: 'Senior Software Architect',
+    company: 'Product Tech Solutions',
+    role: 'Software Engineer',
     period: '2023 - Present',
-    description: 'Spearheading the development of next-generation cloud infrastructure and distributed systems.',
+    description: 'Build and maintain frontend and backend features for business web applications used by internal and external teams.',
     achievements: [
-      'Reduced system latency by 40% through microservices optimization.',
-      'Led a team of 12 engineers in a complete platform migration.',
-      'Implemented post-quantum security protocols across all APIs.'
+      'Delivered 15+ production features across React and Node.js services.',
+      'Improved dashboard load speed by 35% by optimizing render paths and API calls.',
+      'Collaborated with design and QA to reduce release issues by 25%.'
     ]
   },
   {
     id: '2',
-    company: 'Nebula Labs',
+    company: 'WebCraft Studio',
     role: 'Full Stack Developer',
     period: '2021 - 2023',
-    description: 'Developed high-performance web applications and interactive data visualizations.',
+    description: 'Developed client-facing web applications and admin tools for small and medium-sized businesses.',
     achievements: [
-      'Built a real-time analytics dashboard used by 500k+ monthly users.',
-      'Optimized React rendering performance, improving Lighthouse scores by 25 points.',
-      'Integrated AI-driven predictive modeling into the core product.'
+      'Built responsive UIs that increased mobile engagement by 20%.',
+      'Implemented secure REST APIs and reduced recurring bugs by standardizing validation.',
+      'Delivered projects on schedule in an agile team with weekly releases.'
     ]
   }
 ];
@@ -75,24 +75,24 @@ export const EXPERIENCE: Experience[] = [
 export const EDUCATION: Education[] = [
   {
     id: '1',
-    institution: 'Tech Institute of Future',
-    degree: 'Master of Science in Computer Science',
+    institution: 'Institute of Technology',
+    degree: 'Master of Computer Applications',
     period: '2019 - 2021',
-    description: 'Specialized in Artificial Intelligence and Distributed Systems. Graduated with honors.'
+    description: 'Focused on full stack development, data structures, and software engineering practices.'
   },
   {
     id: '2',
-    institution: 'Global University of Design',
-    degree: 'Bachelor of Science in Software Engineering',
+    institution: 'State University',
+    degree: 'Bachelor of Computer Science',
     period: '2015 - 2019',
-    description: 'Focused on UI/UX principles and scalable web architecture.'
+    description: 'Built strong fundamentals in programming, databases, networking, and web development.'
   }
 ];
 
 export const SKILLS: Skill[] = [
-  { name: 'React / Next.js', level: 95, icon: 'Code' },
-  { name: 'TypeScript', level: 90, icon: 'Terminal' },
-  { name: 'Cloud Architecture', level: 85, icon: 'Globe' },
-  { name: 'AI Integration', level: 80, icon: 'Cpu' },
-  { name: 'UI/UX Design', level: 88, icon: 'Zap' }
+  { name: 'Frontend: React, Next.js, TypeScript, Tailwind CSS', level: 90, icon: 'Code' },
+  { name: 'Backend: Node.js, Express, REST APIs', level: 86, icon: 'Terminal' },
+  { name: 'Database: PostgreSQL, MongoDB, Prisma', level: 84, icon: 'Globe' },
+  { name: 'Cloud/DevOps: Vercel, Render, Docker, GitHub Actions', level: 78, icon: 'Cpu' },
+  { name: 'Testing & Quality: Jest, React Testing Library, Postman', level: 75, icon: 'Zap' }
 ];
