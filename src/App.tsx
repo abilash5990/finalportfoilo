@@ -12,6 +12,7 @@ import ContactSection from './components/sections/ContactSection';
 import { ThemeProvider } from './context/ThemeContext';
 import { ProfileData } from './data/site.config';
 import { useNotifications } from './hooks/useNotifications';
+import { useResume } from './hooks/useResume';
 import { Education, Experience, Project, SkillCategory } from './types';
 import {
   STORAGE_KEYS,
@@ -58,6 +59,8 @@ function applyPortfolioData(
 
 function PortfolioContent() {
   const { notifications, addNotification, removeNotification } = useNotifications();
+  const { hasCustomResume, resumeInfo, justUploaded, uploadResume, removeResume, viewResume, downloadResume } =
+    useResume();
   const defaults = useMemo(() => getDefaultPortfolioData(), []);
   const initial = useMemo(() => loadPortfolioData(), []);
 
@@ -171,8 +174,9 @@ function PortfolioContent() {
     }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     clearPortfolioStorage();
+    await removeResume();
     const resetData = clonePortfolioData(defaults);
     applyPortfolioData(resetData, setters);
     setIsEditing(false);
@@ -180,14 +184,50 @@ function PortfolioContent() {
     addNotification('Portfolio reset to defaults', 'success');
   };
 
-  const handleResumeDownload = () => {
-    addNotification('Resume downloaded', 'info');
+  const handleResumeView = async () => {
+    try {
+      await viewResume();
+      addNotification('Resume opened', 'info');
+    } catch {
+      addNotification('Failed to open resume', 'error');
+    }
+  };
+
+  const handleResumeDownload = async () => {
+    try {
+      await downloadResume(viewProfile.name);
+      addNotification('Resume downloaded', 'success');
+    } catch {
+      addNotification('Failed to download resume', 'error');
+    }
+  };
+
+  const handleResumeUpload = async (file: File) => {
+    try {
+      await uploadResume(file);
+      addNotification(`Resume uploaded: ${file.name}`, 'success');
+    } catch (err) {
+      addNotification(err instanceof Error ? err.message : 'Failed to upload resume', 'error');
+    }
+  };
+
+  const handleResumeRemove = async () => {
+    try {
+      await removeResume();
+      addNotification('Using public/resume.pdf', 'info');
+    } catch {
+      addNotification('Failed to remove uploaded resume', 'error');
+    }
   };
 
   return (
     <div className="min-h-screen selection:bg-accent/20">
       <SeoHead />
-      <Navbar brandName={viewProfile.name} resumeUrl={viewProfile.resumeUrl} onResumeDownload={handleResumeDownload} />
+      <Navbar
+        brandName={viewProfile.name}
+        onResumeView={handleResumeView}
+        onResumeDownload={handleResumeDownload}
+      />
       <NotificationSystem notifications={notifications} removeNotification={removeNotification} />
 
       <main className="mx-auto max-w-6xl px-4 pb-24 pt-14 md:px-6 md:pt-20">
@@ -211,7 +251,13 @@ function PortfolioContent() {
           draftProfile={draftProfile}
           setDraftProfile={setDraftProfile}
           displayRole={displayRole}
+          hasCustomResume={hasCustomResume}
+          resumeInfo={resumeInfo}
+          justUploaded={justUploaded}
+          onResumeView={handleResumeView}
           onResumeDownload={handleResumeDownload}
+          onResumeUpload={(file) => void handleResumeUpload(file)}
+          onResumeRemove={() => void handleResumeRemove()}
         />
 
         <ExperienceSection

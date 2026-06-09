@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ExternalLink, FileDown } from 'lucide-react';
 import { NAV_ITEMS } from '../../data/site.config';
 import { scrollToSection } from '../../utils/scroll';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface MobileNavProps {
   brandName: string;
-  resumeUrl: string;
   open: boolean;
   onOpen: () => void;
   onClose: () => void;
+  onResumeView: () => void;
   onResumeDownload: () => void;
 }
 
 export default function MobileNav({
   brandName,
-  resumeUrl,
   open,
   onOpen,
   onClose,
+  onResumeView,
   onResumeDownload,
 }: MobileNavProps) {
   const reducedMotion = useReducedMotion();
@@ -90,14 +90,28 @@ export default function MobileNav({
                   </li>
                 ))}
               </ul>
-              <a
-                href={resumeUrl}
-                download="Resume.pdf"
-                onClick={onResumeDownload}
-                className="btn-primary mt-auto inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold text-white"
-              >
-                Download Resume
-              </a>
+              <div className="mt-auto flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onResumeView();
+                  }}
+                  className="btn-secondary inline-flex items-center justify-center gap-2 rounded-xl border border-border-subtle px-4 py-3 text-sm font-semibold"
+                >
+                  View Resume <ExternalLink className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onResumeDownload();
+                  }}
+                  className="btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white"
+                >
+                  Download Resume <FileDown className="h-4 w-4" />
+                </button>
+              </div>
             </motion.nav>
           </motion.div>
         )}

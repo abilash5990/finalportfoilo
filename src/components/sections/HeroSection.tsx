@@ -1,9 +1,11 @@
-import { type Dispatch, type SetStateAction } from 'react';
+import { useRef, type Dispatch, type SetStateAction } from 'react';
 import { motion } from 'motion/react';
-import { FileDown, Mail } from 'lucide-react';
+import { ExternalLink, Eye, FileDown, FileUp, Mail, Trash2 } from 'lucide-react';
 import { ProfileData } from '../../data/site.config';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { scrollToSection } from '../../utils/scroll';
+import type { ResumeInfo } from '../../utils/resumeStorage';
+import ResumeStatus from '../admin/ResumeStatus';
 
 interface HeroSectionProps {
   profile: ProfileData;
@@ -11,7 +13,13 @@ interface HeroSectionProps {
   draftProfile: ProfileData;
   setDraftProfile: Dispatch<SetStateAction<ProfileData>>;
   displayRole: string;
+  hasCustomResume: boolean;
+  resumeInfo: ResumeInfo | null;
+  justUploaded: boolean;
+  onResumeView: () => void;
   onResumeDownload: () => void;
+  onResumeUpload: (file: File) => void;
+  onResumeRemove: () => void;
 }
 
 export default function HeroSection({
@@ -20,9 +28,16 @@ export default function HeroSection({
   draftProfile,
   setDraftProfile,
   displayRole,
+  hasCustomResume,
+  resumeInfo,
+  justUploaded,
+  onResumeView,
   onResumeDownload,
+  onResumeUpload,
+  onResumeRemove,
 }: HeroSectionProps) {
   const reducedMotion = useReducedMotion();
+  const resumeInputRef = useRef<HTMLInputElement>(null);
   const motionProps = reducedMotion
     ? {}
     : { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 } };
@@ -111,14 +126,20 @@ export default function HeroSection({
         transition={reducedMotion ? undefined : { delay: 0.32 }}
         className="mt-8 flex flex-wrap gap-3"
       >
-        <a
-          href={profile.resumeUrl}
-          download="Resume.pdf"
+        <button
+          type="button"
+          onClick={onResumeView}
+          className="btn-secondary inline-flex items-center gap-2 rounded-xl border border-border-subtle px-5 py-3 font-semibold"
+        >
+          View Resume <ExternalLink className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
           onClick={onResumeDownload}
           className="btn-primary inline-flex items-center gap-2 rounded-xl px-5 py-3 font-semibold text-white"
         >
           Download Resume <FileDown className="h-4 w-4" />
-        </a>
+        </button>
         <button
           type="button"
           onClick={() => scrollToSection('contact')}
@@ -128,31 +149,71 @@ export default function HeroSection({
         </button>
       </motion.div>
       {isEditing && (
-        <div className="mt-4 grid max-w-3xl grid-cols-1 gap-3 md:grid-cols-2">
-          <input
-            value={draftProfile.githubUrl}
-            onChange={(e) => setDraftProfile((prev) => ({ ...prev, githubUrl: e.target.value }))}
-            className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
-            placeholder="GitHub URL"
-          />
-          <input
-            value={draftProfile.linkedinUrl}
-            onChange={(e) => setDraftProfile((prev) => ({ ...prev, linkedinUrl: e.target.value }))}
-            className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
-            placeholder="LinkedIn URL"
-          />
-          <input
-            value={draftProfile.emailAddress}
-            onChange={(e) => setDraftProfile((prev) => ({ ...prev, emailAddress: e.target.value }))}
-            className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
-            placeholder="Email"
-          />
-          <input
-            value={draftProfile.resumeUrl}
-            onChange={(e) => setDraftProfile((prev) => ({ ...prev, resumeUrl: e.target.value }))}
-            className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
-            placeholder="Resume URL"
-          />
+        <div className="mt-4 max-w-3xl space-y-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <input
+              value={draftProfile.githubUrl}
+              onChange={(e) => setDraftProfile((prev) => ({ ...prev, githubUrl: e.target.value }))}
+              className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
+              placeholder="GitHub URL"
+            />
+            <input
+              value={draftProfile.linkedinUrl}
+              onChange={(e) => setDraftProfile((prev) => ({ ...prev, linkedinUrl: e.target.value }))}
+              className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
+              placeholder="LinkedIn URL"
+            />
+            <input
+              value={draftProfile.emailAddress}
+              onChange={(e) => setDraftProfile((prev) => ({ ...prev, emailAddress: e.target.value }))}
+              className="rounded-lg border border-border-subtle bg-glass-bg px-3 py-2 text-sm"
+              placeholder="Email"
+            />
+          </div>
+          <div className="rounded-xl border border-border-subtle bg-glass-bg p-4">
+            <p className="text-sm font-medium text-primary">Resume PDF</p>
+            <ResumeStatus
+              hasCustomResume={hasCustomResume}
+              resumeInfo={resumeInfo}
+              justUploaded={justUploaded}
+            />
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => resumeInputRef.current?.click()}
+                className="btn-secondary inline-flex items-center gap-2 rounded-lg border border-border-subtle px-3 py-2 text-sm"
+              >
+                <FileUp className="h-4 w-4" /> Upload PDF
+              </button>
+              <button
+                type="button"
+                onClick={onResumeView}
+                className="btn-secondary inline-flex items-center gap-2 rounded-lg border border-border-subtle px-3 py-2 text-sm"
+              >
+                <Eye className="h-4 w-4" /> View current
+              </button>
+              {hasCustomResume && (
+                <button
+                  type="button"
+                  onClick={onResumeRemove}
+                  className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 px-3 py-2 text-sm text-red-500 hover:bg-red-500/10"
+                >
+                  <Trash2 className="h-4 w-4" /> Remove
+                </button>
+              )}
+            </div>
+            <input
+              ref={resumeInputRef}
+              type="file"
+              accept="application/pdf"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                e.target.value = '';
+                if (file) onResumeUpload(file);
+              }}
+            />
+          </div>
         </div>
       )}
     </section>

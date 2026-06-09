@@ -1,6 +1,6 @@
 import { useState, type MouseEvent } from 'react';
 import { motion } from 'motion/react';
-import { Sun, Moon, FileDown } from 'lucide-react';
+import { Sun, Moon, FileDown, ExternalLink } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { NAV_ITEMS } from '../../data/site.config';
 import { scrollToSection } from '../../utils/scroll';
@@ -8,11 +8,11 @@ import MobileNav from './MobileNav';
 
 interface NavbarProps {
   brandName: string;
-  resumeUrl: string;
+  onResumeView: () => void;
   onResumeDownload: () => void;
 }
 
-export default function Navbar({ brandName, resumeUrl, onResumeDownload }: NavbarProps) {
+export default function Navbar({ brandName, onResumeView, onResumeDownload }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -44,14 +44,21 @@ export default function Navbar({ brandName, resumeUrl, onResumeDownload }: Navba
               {item}
             </a>
           ))}
-          <a
-            href={resumeUrl}
-            download="Resume.pdf"
-            onClick={onResumeDownload}
-            className="flex items-center gap-1 text-accent"
+          <button
+            type="button"
+            onClick={onResumeView}
+            className="flex items-center gap-1 text-accent hover:underline"
           >
-            Resume <FileDown className="h-4 w-4" />
-          </a>
+            Resume <ExternalLink className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            onClick={onResumeDownload}
+            className="flex items-center gap-1 text-secondary hover:text-accent"
+            title="Download resume"
+          >
+            <FileDown className="h-4 w-4" />
+          </button>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -81,10 +88,10 @@ export default function Navbar({ brandName, resumeUrl, onResumeDownload }: Navba
           </button>
           <MobileNav
             brandName={brandName}
-            resumeUrl={resumeUrl}
             open={mobileOpen}
             onOpen={() => setMobileOpen(true)}
             onClose={() => setMobileOpen(false)}
+            onResumeView={onResumeView}
             onResumeDownload={onResumeDownload}
           />
         </div>
