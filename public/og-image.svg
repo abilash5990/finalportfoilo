@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#020817"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="#0f172a" stroke="#0284c7" stroke-width="2"/>
+  <text x="100" y="280" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="72" font-weight="700">Abilash</text>
+  <text x="100" y="360" fill="#0284c7" font-family="system-ui,sans-serif" font-size="40" font-weight="500">Full Stack Developer</text>
+  <text x="100" y="430" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="28">React · TypeScript · Node.js · PostgreSQL</text>
+</svg>
