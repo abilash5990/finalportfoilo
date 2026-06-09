@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#0f172a"/>
+  <polyline points="80,350 180,280 280,300 380,200 480,220 580,120 680,150" fill="none" stroke="#0284c7" stroke-width="4"/>
+  <rect x="80" y="80" width="160" height="80" rx="8" fill="#1e293b"/>
+  <rect x="260" y="80" width="160" height="80" rx="8" fill="#1e293b"/>
+  <rect x="440" y="80" width="160" height="80" rx="8" fill="#1e293b"/>
+  <rect x="620" y="80" width="100" height="80" rx="8" fill="#0284c7" opacity="0.3"/>
+  <text x="400" y="420" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="20">Real-Time Analytics Dashboard</text>
+</svg>

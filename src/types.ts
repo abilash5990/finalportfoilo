@@ -6,14 +6,25 @@ export interface Project {
   duration: string;
   keyFeatures: string[];
   tags: string[];
-  image?: string;
+  image: string;
   link: string;
+  liveUrl?: string;
+  githubUrl?: string;
+  problem?: string;
+  solution?: string;
+  result?: string;
+  impact?: string;
 }
 
 export interface Skill {
   name: string;
   level: number;
   icon: string;
+}
+
+export interface SkillCategory {
+  name: string;
+  skills: Skill[];
 }
 
 export interface Experience {
